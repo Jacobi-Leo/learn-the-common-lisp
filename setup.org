@@ -1,11 +1,11 @@
 * How to set up a common lisp programming platform
 There are many ways of setting up lisp programming platform, the following discusses some of them.
 ** LispWorks
- The commercial way of solving problem. Very expensive. Not suitable for me.
+The commercial way of solving problem. Very expensive. Not suitable for me.
 ** SLIME
- The Emacs way of solving the problem. Very efficient, and if Spacemacs installed, just add the 'common lisp' layer.
- SLIME is not only a front end for the common lisp interpreter (I prefer CLisp and SBCL), but also a whole environment.
- Don't just use SLIME as REPL: you can write the code and run it nearly at the same time with the help of SLIME due to
- the functional nature of lisp.
+The Emacs way of solving the problem. Very efficient, and if Spacemacs installed, just add the 'common lisp' layer.
+SLIME is not only a front end for the common lisp interpreter (I prefer CLisp and SBCL), but also a whole environment.
+Don't just use SLIME as REPL: you can write the code and run it nearly at the same time with the help of SLIME due to
+the functional nature of lisp.
 ** Quicklisp
- Package management system for common lisp.
+Package management system for common lisp.
