@@ -72,7 +72,7 @@
                        (princ "--")
                        (princ (dot-name (car edge)))
                        (princ "[label=\"")
-                       (princ (dot-label (cdr edge)))
+                       (princ (dot-label (cddr edge)))
                        (princ "\"];")))
                    (cdar lst)))
            edges))
