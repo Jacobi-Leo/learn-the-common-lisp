@@ -1,4 +1,4 @@
-(load "graph-util")
+(load "/home/jacob/learn-the-common-lisp/graph-util.lisp")
 
 (defparameter *congestion-city-nodes* nil)
 (defparameter *congestion-city-edges* nil)
@@ -36,7 +36,7 @@
     visited))
 
 (defun find-islands (nodes edge-list)
-  (let ((island nil))
+  (let ((islands nil))
     (labels ((find-island (nodes)
                (let* ((connected (get-connected (car nodes) edge-list))
                       (unconnected (set-difference nodes connected)))
