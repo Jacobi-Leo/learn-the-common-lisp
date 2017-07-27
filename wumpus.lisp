@@ -40,16 +40,53 @@
     (labels ((find-island (nodes)
                (let* ((connected (get-connected (car nodes) edge-list))
                       (unconnected (set-difference nodes connected)))
-                 (push connected islands)
+                 (push connected islands) ; islands is list of lists, each island consists of all nodes on the island
                  (when unconnected
                    (find-island unconnected)))))
       (find-island nodes))
     islands))
 
 (defun connect-with-bridges (islands)
+  "This function returns edges(bridges) which connect the islands only."
   (when (cdr islands)
     (append (edge-pair (caar islands) (caadr islands))
             (connect-with-bridges (cdr islands)))))
 
 (defun connect-all-islands (nodes edge-list)
   (append (connect-with-bridges (find-islands nodes edge-list)) edge-list))
+
+(defun make-city-edges ()
+  "This is a non-functional routine."
+  (let* ((nodes (loop for i from 1 to *node-num*
+                      collect i))
+         (edge-list (connect-all-islands nodes (make-edge-list)))
+         (cops (remove-if-not (lambda (x)
+                                (zerop (random *cop-odds*)))
+                              edge-list)))
+    (add-cops (edges-to-alist edge-list) cops)))
+
+(defun edges-to-alist (edge-list)
+  "Convert list of cons representing edges to association list representing standard graph."
+  (mapcar (lambda (node1)
+            (cons node1
+                  (mapcar (lambda (edge)
+                            (list (cdr edge)))
+                          (remove-duplicates (direct-edges node1 edge-list)
+                                             :test #'equal))))
+          (remove-duplicates (mapcar #'car edge-list))))
+
+(defun add-cops (edge-alist edges-with-cops)
+  "Add some cops into the graph (association list)."
+  (mapcar (lambda (x)
+            (let ((node1 (car x))
+                  (node1-edges (cdr x)))
+              (cons node1
+                    (mapcar (lambda (edge)
+                              (let ((node2 (car edge)))
+                                (if (intersection (edge-pair node1 node2)
+                                                  edges-with-cops
+                                                  :test #'equal)
+                                    (list node2 'cops)
+                                    edge)))
+                            node1-edges))))
+          edge-alist))
